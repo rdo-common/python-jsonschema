@@ -3,7 +3,7 @@
 
 Name:           python-%{pypi_name}
 Version:        0.2
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        An implementation of JSON Schema validation for Python
 
 License:        MIT
@@ -36,6 +36,9 @@ http://tools.ietf.org/html/draft-zyp-json-schema-03
 
 
 %changelog
+* Thu Feb 14 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.2-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_19_Mass_Rebuild
+
 * Sat Jul 21 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.2-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_18_Mass_Rebuild
 
