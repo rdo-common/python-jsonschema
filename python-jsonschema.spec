@@ -2,16 +2,15 @@
 %global pypi_name jsonschema
 
 Name:           python-%{pypi_name}
-Version:        1.3.0
-Release:        2%{?dist}
+Version:        2.0.0
+Release:        1%{?dist}
 Summary:        An implementation of JSON Schema validation for Python
 
 License:        MIT
-URL:            http://pypi.python.org/pypi/jsonschema/1.3.0
+URL:            http://pypi.python.org/pypi/jsonschema
 Source0:        http://pypi.python.org/packages/source/j/jsonschema/%{pypi_name}-%{version}.tar.gz
 BuildArch:      noarch
-
-BuildRequires:  python-devel
+BuildRequires:  python2-devel
 
 
 %description
@@ -31,11 +30,14 @@ http://tools.ietf.org/html/draft-zyp-json-schema-03
 
 %files
 %doc README.rst COPYING
-%{python_sitelib}/%{pypi_name}.*
+%{python_sitelib}/%{pypi_name}/
 %{python_sitelib}/%{pypi_name}-%{version}-py?.?.egg-info
 
 
 %changelog
+* Fri Aug 16 2013 Alan Pevec <apevec@redhat.com> 2.0.0-1
+- Update to 2.0.0 release
+
 * Sun Aug 04 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.3.0-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_20_Mass_Rebuild
 
