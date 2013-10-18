@@ -86,7 +86,7 @@ popd
 
 %changelog
 * Thu Oct 17 2013 Thomas Spura <tomspur@fedoraproject.org> - 2.0.0-2
-- add python3 subpackage
+- add python3 subpackage (#1016207)
 - add %%check
 
 * Fri Aug 16 2013 Alan Pevec <apevec@redhat.com> 2.0.0-1
