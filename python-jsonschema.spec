@@ -9,7 +9,7 @@
 
 Name:           python-%{pypi_name}
 Version:        2.0.0
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        An implementation of JSON Schema validation for Python
 
 License:        MIT
@@ -19,7 +19,7 @@ BuildArch:      noarch
 BuildRequires:  python2-devel
 BuildRequires:  python-nose
 BuildRequires:  python-mock
-%if 0%{with_python3}
+%if 0%{?with_python3}
 BuildRequires:  python3-devel
 BuildRequires:  python3-nose
 BuildRequires:  python3-mock
@@ -30,7 +30,7 @@ BuildRequires:  python3-mock
 jsonschema is JSON Schema validator currently based on
 http://tools.ietf.org/html/draft-zyp-json-schema-03
 
-%if 0%{with_python3}
+%if 0%{?with_python3}
 %package -n python3-%{pypi_name}
 Summary:        An implementation of JSON Schema validation for Python
 %description -n python3-%{pypi_name}
@@ -47,7 +47,7 @@ find %{py3dir} -name '*.py' | xargs sed -i '1s|^#!python|#!%{__python3}|'
 %endif # with_python3
 
 %build
-%if 0%{with_python3}
+%if 0%{?with_python3}
 pushd %{py3dir}
     %{__python3} setup.py build
 popd
@@ -56,7 +56,7 @@ popd
 
 
 %install
-%if 0%{with_python3}
+%if 0%{?with_python3}
 pushd %{py3dir}
     %{__python3} setup.py install -O1 --skip-build --root %{buildroot}
 popd
@@ -64,7 +64,7 @@ popd
 %{__python} setup.py install -O1 --skip-build --root %{buildroot}
 
 %check
-%if 0%{with_python3}
+%if 0%{?with_python3}
 pushd %{py3dir}
     %{_bindir}/nosetests-3* -v
 popd
@@ -76,7 +76,7 @@ popd
 %{python_sitelib}/%{pypi_name}/
 %{python_sitelib}/%{pypi_name}-%{version}-py?.?.egg-info
 
-%if 0%{with_python3}
+%if 0%{?with_python3}
 %files -n python3-%{pypi_name}
 %doc README.rst COPYING
 %{python3_sitelib}/%{pypi_name}/
@@ -85,6 +85,9 @@ popd
 
 
 %changelog
+* Tue Feb 04 2014 Matthias Runge <mrunge@redhat.com> - 2.0.0-3
+- fix %%{? issues in spec
+
 * Thu Oct 17 2013 Thomas Spura <tomspur@fedoraproject.org> - 2.0.0-2
 - add python3 subpackage (#1016207)
 - add %%check
