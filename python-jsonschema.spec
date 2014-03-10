@@ -8,8 +8,8 @@
 %endif
 
 Name:           python-%{pypi_name}
-Version:        2.0.0
-Release:        3%{?dist}
+Version:        2.3.0
+Release:        1%{?dist}
 Summary:        An implementation of JSON Schema validation for Python
 
 License:        MIT
@@ -85,6 +85,9 @@ popd
 
 
 %changelog
+* Mon Mar 10 2014 Pádraig Brady <pbrady@redhat.com> - 2.3.0-1
+- Latest upstream
+
 * Tue Feb 04 2014 Matthias Runge <mrunge@redhat.com> - 2.0.0-3
 - fix %%{? issues in spec
 
