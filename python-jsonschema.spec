@@ -16,6 +16,11 @@ License:        MIT
 URL:            http://pypi.python.org/pypi/jsonschema
 Source0:        http://pypi.python.org/packages/source/j/jsonschema/%{pypi_name}-%{version}.tar.gz
 BuildArch:      noarch
+
+%if %{?rhel}%{!?rhel:0} == 6
+BuildRequires:  python-unittest2
+BuildRequires:  python-argparse
+%endif
 BuildRequires:  python2-devel
 BuildRequires:  python-nose
 BuildRequires:  python-mock
@@ -69,7 +74,7 @@ pushd %{py3dir}
     %{_bindir}/nosetests-3* -v
 popd
 %endif
-%{_bindir}/nosetests-2* -v
+%{_bindir}/nosetests -v
 
 %files
 %doc README.rst COPYING
