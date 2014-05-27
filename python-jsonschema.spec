@@ -9,7 +9,7 @@
 
 Name:           python-%{pypi_name}
 Version:        2.3.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        An implementation of JSON Schema validation for Python
 
 License:        MIT
@@ -90,6 +90,9 @@ popd
 
 
 %changelog
+* Wed May 28 2014 Kalev Lember <kalevlember@gmail.com> - 2.3.0-2
+- Rebuilt for https://fedoraproject.org/wiki/Changes/Python_3.4
+
 * Mon Mar 10 2014 Pádraig Brady <pbrady@redhat.com> - 2.3.0-1
 - Latest upstream
 
