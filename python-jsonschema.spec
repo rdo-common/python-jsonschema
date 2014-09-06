@@ -8,8 +8,8 @@
 %endif
 
 Name:           python-%{pypi_name}
-Version:        2.3.0
-Release:        3%{?dist}
+Version:        2.4.0
+Release:        1%{?dist}
 Summary:        An implementation of JSON Schema validation for Python
 
 License:        MIT
@@ -78,6 +78,7 @@ popd
 
 %files
 %doc README.rst COPYING
+%{_bindir}/jsonschema
 %{python_sitelib}/%{pypi_name}/
 %{python_sitelib}/%{pypi_name}-%{version}-py?.?.egg-info
 
@@ -90,6 +91,9 @@ popd
 
 
 %changelog
+* Sat Sep 06 2014 Alan Pevec <apevec@redhat.com> - 2.4.0-1
+- Latest upstream
+
 * Sat Jun 07 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2.3.0-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_21_Mass_Rebuild
 
