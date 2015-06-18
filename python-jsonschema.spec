@@ -9,7 +9,7 @@
 
 Name:           python-%{pypi_name}
 Version:        2.4.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        An implementation of JSON Schema validation for Python
 
 License:        MIT
@@ -91,6 +91,9 @@ popd
 
 
 %changelog
+* Thu Jun 18 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2.4.0-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_23_Mass_Rebuild
+
 * Sat Sep 06 2014 Alan Pevec <apevec@redhat.com> - 2.4.0-1
 - Latest upstream
 
