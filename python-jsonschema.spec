@@ -8,8 +8,8 @@
 %endif
 
 Name:           python-%{pypi_name}
-Version:        2.4.0
-Release:        4%{?dist}
+Version:        2.5.1
+Release:        1%{?dist}
 Summary:        An implementation of JSON Schema validation for Python
 
 License:        MIT
@@ -24,12 +24,22 @@ BuildRequires:  python-argparse
 BuildRequires:  python2-devel
 BuildRequires:  python-nose
 BuildRequires:  python-mock
+# Avoid unpackaged deps:
+#BuildRequires:  python-vcversioner
+#BuildRequires:  python-functools32
+# Alternative for functools32.lru_cache
+BuildRequires:  python-repoze-lru
 %if 0%{?with_python3}
 BuildRequires:  python3-devel
 BuildRequires:  python3-nose
 BuildRequires:  python3-mock
 %endif
 
+#Requires: python-functools32
+Requires: python-repoze-lru
+
+# avoid functools32, vcversioner
+Patch0: avoid-unpackaged.patch
 
 %description
 jsonschema is JSON Schema validator currently based on
@@ -45,6 +55,7 @@ http://tools.ietf.org/html/draft-zyp-json-schema-03
 
 %prep
 %setup -q -n %{pypi_name}-%{version}
+%patch0 -p1
 %if 0%{?with_python3}
 rm -rf %{py3dir}
 cp -a . %{py3dir}
@@ -91,8 +102,12 @@ popd
 
 
 %changelog
+* Fri Feb 26 2016 Lon Hohberger <lhh@redhat.com> 2.5.1-1
+- Update to 2.5.1
+
 * Thu Feb 04 2016 Fedora Release Engineering <releng@fedoraproject.org> - 2.4.0-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_24_Mass_Rebuild
+
 
 * Tue Oct 13 2015 Robert Kuska <rkuska@redhat.com> - 2.4.0-3
 - Rebuilt for Python3.5 rebuild
