@@ -9,7 +9,7 @@
 
 Name:           python-%{pypi_name}
 Version:        2.5.1
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        An implementation of JSON Schema validation for Python
 
 License:        MIT
@@ -102,6 +102,9 @@ popd
 
 
 %changelog
+* Tue Jul 19 2016 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2.5.1-2
+- https://fedoraproject.org/wiki/Changes/Automatic_Provides_for_Python_RPM_Packages
+
 * Fri Feb 26 2016 Lon Hohberger <lhh@redhat.com> 2.5.1-1
 - Update to 2.5.1
 
