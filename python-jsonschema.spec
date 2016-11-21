@@ -1,15 +1,11 @@
 # Created by pyp2rpm-0.4.2
 %global pypi_name jsonschema
 
-%if 0%{?fedora} > 12
 %global with_python3 1
-%else
-%{!?python_sitelib: %global python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print (get_python_lib())")}
-%endif
 
 Name:           python-%{pypi_name}
 Version:        2.5.1
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        An implementation of JSON Schema validation for Python
 
 License:        MIT
@@ -30,13 +26,10 @@ BuildRequires:  python-mock
 # Alternative for functools32.lru_cache
 BuildRequires:  python-repoze-lru
 %if 0%{?with_python3}
-BuildRequires:  python3-devel
-BuildRequires:  python3-nose
-BuildRequires:  python3-mock
+BuildRequires:  python%{python3_pkgversion}-devel
+BuildRequires:  python%{python3_pkgversion}-nose
+BuildRequires:  python%{python3_pkgversion}-mock
 %endif
-
-#Requires: python-functools32
-Requires: python-repoze-lru
 
 # avoid functools32, vcversioner
 Patch0: avoid-unpackaged.patch
@@ -45,10 +38,22 @@ Patch0: avoid-unpackaged.patch
 jsonschema is JSON Schema validator currently based on
 http://tools.ietf.org/html/draft-zyp-json-schema-03
 
+%package -n python2-%{pypi_name}
+Summary:        An implementation of JSON Schema validation for Python 2
+#Requires: python-functools32
+Requires: python-repoze-lru
+%{?python_provide:%python_provide python2-%{pypi_name}}
+
+%description -n python2-%{pypi_name}
+jsonschema is JSON Schema validator currently based on
+http://tools.ietf.org/html/draft-zyp-json-schema-03
+
 %if 0%{?with_python3}
-%package -n python3-%{pypi_name}
-Summary:        An implementation of JSON Schema validation for Python
-%description -n python3-%{pypi_name}
+%package -n python%{python3_pkgversion}-%{pypi_name}
+Summary:        An implementation of JSON Schema validation for Python %{python3_version}
+%{?python_provide:%python_provide python%{python3_pkgversion}-%{pypi_name}}
+
+%description -n python%{python3_pkgversion}-%{pypi_name}
 jsonschema is JSON Schema validator currently based on
 http://tools.ietf.org/html/draft-zyp-json-schema-03
 %endif
@@ -56,52 +61,49 @@ http://tools.ietf.org/html/draft-zyp-json-schema-03
 %prep
 %setup -q -n %{pypi_name}-%{version}
 %patch0 -p1
-%if 0%{?with_python3}
-rm -rf %{py3dir}
-cp -a . %{py3dir}
-find %{py3dir} -name '*.py' | xargs sed -i '1s|^#!python|#!%{__python3}|'
-%endif # with_python3
 
 %build
 %if 0%{?with_python3}
-pushd %{py3dir}
-    %{__python3} setup.py build
-popd
+%py3_build
 %endif
-%{__python} setup.py build
+%py2_build
 
 
 %install
 %if 0%{?with_python3}
-pushd %{py3dir}
-    %{__python3} setup.py install -O1 --skip-build --root %{buildroot}
-popd
+%py3_install
 %endif
-%{__python} setup.py install -O1 --skip-build --root %{buildroot}
+%py2_install
 
 %check
 %if 0%{?with_python3}
-pushd %{py3dir}
-    %{_bindir}/nosetests-3* -v
-popd
+%{_bindir}/nosetests-%{python3_version} -v
 %endif
-%{_bindir}/nosetests -v
+%{_bindir}/nosetests-%{python2_version} -v
 
-%files
-%doc README.rst COPYING
+%files -n python2-%{pypi_name}
+%license COPYING
+%doc README.rst
 %{_bindir}/jsonschema
-%{python_sitelib}/%{pypi_name}/
-%{python_sitelib}/%{pypi_name}-%{version}-py?.?.egg-info
+%{python2_sitelib}/%{pypi_name}/
+%{python2_sitelib}/%{pypi_name}-%{version}-py?.?.egg-info
 
 %if 0%{?with_python3}
-%files -n python3-%{pypi_name}
-%doc README.rst COPYING
+%files -n python%{python3_pkgversion}-%{pypi_name}
+%license COPYING
+%doc README.rst
 %{python3_sitelib}/%{pypi_name}/
 %{python3_sitelib}/%{pypi_name}-%{version}-py?.?.egg-info
 %endif
 
 
 %changelog
+* Mon Nov 21 2016 Orion Poplawski <orion@cora.nwra.com> - 2.5.1-3
+- Enable python3 builds for EPEL (bug #1395653)
+- Ship python2-jsonschema
+- Modernize spec
+- Use %%license
+
 * Tue Jul 19 2016 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2.5.1-2
 - https://fedoraproject.org/wiki/Changes/Automatic_Provides_for_Python_RPM_Packages
 
