@@ -5,7 +5,7 @@
 
 Name:           python-%{pypi_name}
 Version:        2.5.1
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        An implementation of JSON Schema validation for Python
 
 License:        MIT
@@ -98,6 +98,9 @@ http://tools.ietf.org/html/draft-zyp-json-schema-03
 
 
 %changelog
+* Wed Dec 14 2016 Charalampos Stratakis <cstratak@redhat.com> - 2.5.1-4
+- Rebuild for Python 3.6
+
 * Mon Nov 21 2016 Orion Poplawski <orion@cora.nwra.com> - 2.5.1-3
 - Enable python3 builds for EPEL (bug #1395653)
 - Ship python2-jsonschema
