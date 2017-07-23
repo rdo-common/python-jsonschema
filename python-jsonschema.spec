@@ -4,13 +4,13 @@
 %global with_python3 1
 
 Name:           python-%{pypi_name}
-Version:        2.5.1
-Release:        5%{?dist}
+Version:        2.6.0
+Release:        1%{?dist}
 Summary:        An implementation of JSON Schema validation for Python
 
 License:        MIT
 URL:            http://pypi.python.org/pypi/jsonschema
-Source0:        http://pypi.python.org/packages/source/j/jsonschema/%{pypi_name}-%{version}.tar.gz
+Source0:        https://files.pythonhosted.org/packages/source/j/jsonschema/%{pypi_name}-%{version}.tar.gz
 BuildArch:      noarch
 
 %if %{?rhel}%{!?rhel:0} == 6
@@ -32,7 +32,7 @@ BuildRequires:  python%{python3_pkgversion}-mock
 %endif
 
 # avoid functools32, vcversioner
-Patch0: avoid-unpackaged.patch
+Patch0: avoid-unpackaged-for-jsonschema-2.6.0.patch
 
 %description
 jsonschema is JSON Schema validator currently based on
@@ -72,6 +72,7 @@ http://tools.ietf.org/html/draft-zyp-json-schema-03
 %install
 %if 0%{?with_python3}
 %py3_install
+mv %{buildroot}%{_bindir}/jsonschema %{buildroot}%{_bindir}/jsonschema-3
 %endif
 %py2_install
 
@@ -92,12 +93,17 @@ http://tools.ietf.org/html/draft-zyp-json-schema-03
 %files -n python%{python3_pkgversion}-%{pypi_name}
 %license COPYING
 %doc README.rst
+%{_bindir}/jsonschema-3
 %{python3_sitelib}/%{pypi_name}/
 %{python3_sitelib}/%{pypi_name}-%{version}-py?.?.egg-info
 %endif
 
 
 %changelog
+* Fri Jul 21 2017 Jan Beran <jberan@redhat.com> 2.6.0-1
+- Update to 2.6.0
+- Fix of missing Python 3 version executables
+
 * Sat Feb 11 2017 Fedora Release Engineering <releng@fedoraproject.org> - 2.5.1-5
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_26_Mass_Rebuild
 

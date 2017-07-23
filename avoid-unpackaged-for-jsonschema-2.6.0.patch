@@ -1,26 +1,30 @@
-diff -ru jsonschema-2.5.1.orig/jsonschema/compat.py jsonschema-2.5.1/jsonschema/compat.py
---- jsonschema-2.5.1.orig/jsonschema/compat.py	2015-04-13 17:23:46.000000000 +0200
-+++ jsonschema-2.5.1/jsonschema/compat.py	2016-02-27 16:33:40.938583562 +0100
-@@ -9,6 +9,7 @@
+diff -ru jsonschema-2.6.0.orig/jsonschema/compat.py jsonschema-2.6.0/jsonschema/compat.py
+--- jsonschema-2.6.0.orig/jsonschema/compat.py	2015-11-30 13:58:04.000000000 +0100
++++ jsonschema-2.6.0/jsonschema/compat.py	2017-07-21 12:57:25.768508757 +0200
+@@ -8,6 +8,7 @@
+     from collections.abc import MutableMapping, Sequence  # noqa
  
  PY3 = sys.version_info[0] >= 3
- PY26 = sys.version_info[:2] == (2, 6)
 +PY27 = sys.version_info[:2] == (2, 7)
  
  if PY3:
      zip = zip
-@@ -33,7 +34,7 @@
+@@ -32,8 +33,10 @@
      int_types = int, long
      iteritems = operator.methodcaller("iteritems")
  
--    if PY26:
-+    if PY26 or PY27:
-         from repoze.lru import lru_cache
-     else:
-         from functools32 import lru_cache
-diff -ru jsonschema-2.5.1.orig/setup.py jsonschema-2.5.1/setup.py
---- jsonschema-2.5.1.orig/setup.py	2015-06-08 18:04:36.000000000 +0200
-+++ jsonschema-2.5.1/setup.py	2016-02-27 16:34:40.462446660 +0100
+-    from functools32 import lru_cache
+-
++    if PY27:
++        from repoze.lru import lru_cache
++    else:
++        from functools32 import lru_cache
+ 
+ # On python < 3.3 fragments are not handled properly with unknown schemes
+ def urlsplit(url):
+diff -ru jsonschema-2.6.0.orig/setup.py jsonschema-2.6.0/setup.py
+--- jsonschema-2.6.0.orig/setup.py	2016-08-28 04:29:36.000000000 +0200
++++ jsonschema-2.6.0/setup.py	2017-07-21 13:28:06.503903938 +0200
 @@ -1,6 +1,7 @@
  import os
  
@@ -29,10 +33,10 @@ diff -ru jsonschema-2.5.1.orig/setup.py jsonschema-2.5.1/setup.py
  
  
  with open(os.path.join(os.path.dirname(__file__), "README.rst")) as readme:
-@@ -24,14 +25,14 @@
+@@ -22,14 +23,14 @@
+ 
  extras_require = {
      "format" : ["rfc3987", "strict-rfc3339", "webcolors"],
-     ":python_version=='2.6'": ["argparse", "repoze.lru"],
 -    ":python_version=='2.7'": ["functools32"],
 +    ":python_version=='2.7'": ["repoze.lru"],
  }
@@ -42,11 +46,11 @@ diff -ru jsonschema-2.5.1.orig/setup.py jsonschema-2.5.1/setup.py
 +    version=_version.__version__,
      packages=["jsonschema", "jsonschema.tests"],
      package_data={"jsonschema": ["schemas/*.json"]},
--    setup_requires=["vcversioner"],
+-    setup_requires=["vcversioner>=2.16.0.0"],
      extras_require=extras_require,
      author="Julian Berman",
      author_email="Julian@GrayVines.com",
-@@ -41,5 +42,4 @@
+@@ -39,5 +40,4 @@
      long_description=long_description,
      url="http://github.com/Julian/jsonschema",
      entry_points={"console_scripts": ["jsonschema = jsonschema.cli:main"]},
