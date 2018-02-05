@@ -1,7 +1,7 @@
 # Created by pyp2rpm-0.4.2
 %global pypi_name jsonschema
 
-%global with_python3 1
+%global with_python3 0
 
 Name:           python-%{pypi_name}
 Version:        2.6.0
