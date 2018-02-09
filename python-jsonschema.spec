@@ -5,7 +5,7 @@
 
 Name:           python-%{pypi_name}
 Version:        2.6.0
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        An implementation of JSON Schema validation for Python
 
 License:        MIT
@@ -100,6 +100,9 @@ mv %{buildroot}%{_bindir}/jsonschema %{buildroot}%{_bindir}/jsonschema-3
 
 
 %changelog
+* Fri Feb 09 2018 Fedora Release Engineering <releng@fedoraproject.org> - 2.6.0-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_28_Mass_Rebuild
+
 * Thu Jul 27 2017 Fedora Release Engineering <releng@fedoraproject.org> - 2.6.0-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Mass_Rebuild
 
