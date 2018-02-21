@@ -5,7 +5,7 @@
 
 Name:           python-%{pypi_name}
 Version:        2.6.0
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        An implementation of JSON Schema validation for Python
 
 License:        MIT
@@ -18,13 +18,13 @@ BuildRequires:  python-unittest2
 BuildRequires:  python-argparse
 %endif
 BuildRequires:  python2-devel
-BuildRequires:  python-nose
-BuildRequires:  python-mock
+BuildRequires:  python2-nose
+BuildRequires:  python2-mock
 # Avoid unpackaged deps:
 #BuildRequires:  python-vcversioner
-#BuildRequires:  python-functools32
+#BuildRequires:  python2-functools32
 # Alternative for functools32.lru_cache
-BuildRequires:  python-repoze-lru
+BuildRequires:  python2-repoze-lru
 %if 0%{?with_python3}
 BuildRequires:  python%{python3_pkgversion}-devel
 BuildRequires:  python%{python3_pkgversion}-nose
@@ -40,8 +40,8 @@ http://tools.ietf.org/html/draft-zyp-json-schema-03
 
 %package -n python2-%{pypi_name}
 Summary:        An implementation of JSON Schema validation for Python 2
-#Requires: python-functools32
-Requires: python-repoze-lru
+#Requires: python2-functools32
+Requires: python2-repoze-lru
 %{?python_provide:%python_provide python2-%{pypi_name}}
 
 %description -n python2-%{pypi_name}
@@ -100,6 +100,10 @@ mv %{buildroot}%{_bindir}/jsonschema %{buildroot}%{_bindir}/jsonschema-3
 
 
 %changelog
+* Wed Feb 21 2018 Iryna Shcherbina <ishcherb@redhat.com> - 2.6.0-4
+- Update Python 2 dependency declarations to new packaging standards
+  (See https://fedoraproject.org/wiki/FinalizingFedoraSwitchtoPython3)
+
 * Fri Feb 09 2018 Fedora Release Engineering <releng@fedoraproject.org> - 2.6.0-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_28_Mass_Rebuild
 
