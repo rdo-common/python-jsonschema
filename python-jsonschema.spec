@@ -1,105 +1,85 @@
-# Created by pyp2rpm-0.4.2
 %global pypi_name jsonschema
+%global pypi_version 3.0.0a5
 
-%global with_python3 1
+%global common_description %{expand:
+jsonschema is an implementation of JSON Schema for Python (supporting
+2.7+, including Python 3).
+
+ - Full support for Draft 7, Draft 6, Draft 4 and Draft 3
+ - Lazy validation that can iteratively report all validation errors.
+ - Small and extensible
+ - Programmatic querying of which properties or items failed validation.}
+
+%{?python_enable_dependency_generator}
 
 Name:           python-%{pypi_name}
-Version:        2.6.0
-Release:        6%{?dist}
-Summary:        An implementation of JSON Schema validation for Python
-
+Summary:        Implementation of JSON Schema validation for Python
+Version:        3.0.0~a5
+Release:        1%{?dist}
 License:        MIT
-URL:            http://pypi.python.org/pypi/jsonschema
-Source0:        https://files.pythonhosted.org/packages/source/j/jsonschema/%{pypi_name}-%{version}.tar.gz
+
+URL:            https://github.com/Julian/jsonschema
+Source0:        %{pypi_source %{pypi_name} %{pypi_version}}
+
 BuildArch:      noarch
 
-%if %{?rhel}%{!?rhel:0} == 6
-BuildRequires:  python-unittest2
-BuildRequires:  python-argparse
-%endif
-BuildRequires:  python2-devel
-BuildRequires:  python2-nose
-BuildRequires:  python2-mock
-# Avoid unpackaged deps:
-#BuildRequires:  python-vcversioner
-#BuildRequires:  python2-functools32
-# Alternative for functools32.lru_cache
-BuildRequires:  python2-repoze-lru
-%if 0%{?with_python3}
-BuildRequires:  python%{python3_pkgversion}-devel
-BuildRequires:  python%{python3_pkgversion}-nose
-BuildRequires:  python%{python3_pkgversion}-mock
-%endif
+BuildRequires:  python3-devel
 
-# avoid functools32, vcversioner
-Patch0: avoid-unpackaged-for-jsonschema-2.6.0.patch
+BuildRequires:  python3dist(setuptools)
+BuildRequires:  python3dist(setuptools-scm)
 
-%description
-jsonschema is JSON Schema validator currently based on
-http://tools.ietf.org/html/draft-zyp-json-schema-03
+# test requirements
+BuildRequires:  python3-pyrsistent
+BuildRequires:  python3dist(attrs)
+BuildRequires:  python3dist(perf)
+BuildRequires:  python3dist(six)
+BuildRequires:  python3dist(twisted)
 
-%package -n python2-%{pypi_name}
-Summary:        An implementation of JSON Schema validation for Python 2
-#Requires: python2-functools32
-Requires: python2-repoze-lru
-%{?python_provide:%python_provide python2-%{pypi_name}}
+%description %{common_description}
 
-%description -n python2-%{pypi_name}
-jsonschema is JSON Schema validator currently based on
-http://tools.ietf.org/html/draft-zyp-json-schema-03
 
-%if 0%{?with_python3}
-%package -n python%{python3_pkgversion}-%{pypi_name}
-Summary:        An implementation of JSON Schema validation for Python %{python3_version}
-%{?python_provide:%python_provide python%{python3_pkgversion}-%{pypi_name}}
+%package -n     python3-%{pypi_name}
+Summary:        %{summary}
 
-%description -n python%{python3_pkgversion}-%{pypi_name}
-jsonschema is JSON Schema validator currently based on
-http://tools.ietf.org/html/draft-zyp-json-schema-03
-%endif
+%{?python_provide:%python_provide python3-%{pypi_name}}
+
+%description -n python3-%{pypi_name} %{common_description}
+
 
 %prep
-%setup -q -n %{pypi_name}-%{version}
-%patch0 -p1
+%autosetup -n %{pypi_name}-%{pypi_version}
+
+# Remove bundled egg-info
+rm -rf %{pypi_name}.egg-info
+
 
 %build
-%if 0%{?with_python3}
 %py3_build
-%endif
-%py2_build
 
 
 %install
-%if 0%{?with_python3}
 %py3_install
-mv %{buildroot}%{_bindir}/jsonschema %{buildroot}%{_bindir}/jsonschema-3
-%endif
-%py2_install
+
 
 %check
-%if 0%{?with_python3}
-%{_bindir}/nosetests-%{python3_version} -v
-%endif
-%{_bindir}/nosetests-%{python2_version} -v
+PYTHONPATH=$(pwd) trial-3 %{pypi_name}
 
-%files -n python2-%{pypi_name}
-%license COPYING
+
+%files -n python3-%{pypi_name}
+%license COPYING json/LICENSE
 %doc README.rst
+
 %{_bindir}/jsonschema
-%{python2_sitelib}/%{pypi_name}/
-%{python2_sitelib}/%{pypi_name}-%{version}-py?.?.egg-info
 
-%if 0%{?with_python3}
-%files -n python%{python3_pkgversion}-%{pypi_name}
-%license COPYING
-%doc README.rst
-%{_bindir}/jsonschema-3
 %{python3_sitelib}/%{pypi_name}/
-%{python3_sitelib}/%{pypi_name}-%{version}-py?.?.egg-info
-%endif
+%{python3_sitelib}/%{pypi_name}-%{pypi_version}-py?.?.egg-info/
 
 
 %changelog
+* Sat Jan 19 2019 Fabio Valentini <decathorpe@gmail.com> - 3.0.0~a5-1
+- Update to version 3.0.0a5.
+- Moved python2 sub-package to separate source package.
+
 * Sat Jul 14 2018 Fedora Release Engineering <releng@fedoraproject.org> - 2.6.0-6
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_29_Mass_Rebuild
 
@@ -140,7 +120,6 @@ mv %{buildroot}%{_bindir}/jsonschema %{buildroot}%{_bindir}/jsonschema-3
 
 * Thu Feb 04 2016 Fedora Release Engineering <releng@fedoraproject.org> - 2.4.0-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_24_Mass_Rebuild
-
 
 * Tue Oct 13 2015 Robert Kuska <rkuska@redhat.com> - 2.4.0-3
 - Rebuilt for Python3.5 rebuild
@@ -184,3 +163,4 @@ mv %{buildroot}%{_bindir}/jsonschema %{buildroot}%{_bindir}/jsonschema-3
 
 * Wed May 23 2012 Pádraig Brady <P@draigBrady.com> - 0.2-1
 - Initial package.
+
