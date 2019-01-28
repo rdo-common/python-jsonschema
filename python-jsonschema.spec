@@ -1,5 +1,5 @@
 %global pypi_name jsonschema
-%global pypi_version 3.0.0b1
+%global pypi_version 3.0.0b3
 
 %global common_description %{expand:
 jsonschema is an implementation of JSON Schema for Python (supporting
@@ -14,7 +14,7 @@ jsonschema is an implementation of JSON Schema for Python (supporting
 
 Name:           python-%{pypi_name}
 Summary:        Implementation of JSON Schema validation for Python
-Version:        3.0.0~b1
+Version:        3.0.0~b3
 Release:        1%{?dist}
 License:        MIT
 
@@ -76,6 +76,9 @@ PYTHONPATH=$(pwd) trial-3 %{pypi_name}
 
 
 %changelog
+* Mon Jan 28 2019 Fabio Valentini <decathorpe@gmail.com> - 3.0.0~b3-1
+- Update to version 3.0.0b3.
+
 * Tue Jan 22 2019 Fabio Valentini <decathorpe@gmail.com> - 3.0.0~b1-1
 - Update to version 3.0.0b1.
 
