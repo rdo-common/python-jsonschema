@@ -1,5 +1,4 @@
 %global pypi_name jsonschema
-%global pypi_version 3.0.0b3
 
 %global common_description %{expand:
 jsonschema is an implementation of JSON Schema for Python (supporting
@@ -14,12 +13,12 @@ jsonschema is an implementation of JSON Schema for Python (supporting
 
 Name:           python-%{pypi_name}
 Summary:        Implementation of JSON Schema validation for Python
-Version:        3.0.0~b3
-Release:        2%{?dist}
+Version:        3.0.0
+Release:        1%{?dist}
 License:        MIT
 
 URL:            https://github.com/Julian/jsonschema
-Source0:        %{pypi_source %{pypi_name} %{pypi_version}}
+Source0:        %{pypi_source}
 
 BuildArch:      noarch
 
@@ -29,9 +28,9 @@ BuildRequires:  python3dist(setuptools)
 BuildRequires:  python3dist(setuptools-scm)
 
 # test requirements
-BuildRequires:  python3-pyrsistent
 BuildRequires:  python3dist(attrs)
 BuildRequires:  python3dist(perf)
+BuildRequires:  python3dist(pyrsistent)
 BuildRequires:  python3dist(six)
 BuildRequires:  python3dist(twisted)
 
@@ -47,7 +46,7 @@ Summary:        %{summary}
 
 
 %prep
-%autosetup -n %{pypi_name}-%{pypi_version}
+%autosetup -n %{pypi_name}-%{version}
 
 # Remove bundled egg-info
 rm -rf %{pypi_name}.egg-info
@@ -72,10 +71,13 @@ PYTHONPATH=$(pwd) trial-3 %{pypi_name}
 %{_bindir}/jsonschema
 
 %{python3_sitelib}/%{pypi_name}/
-%{python3_sitelib}/%{pypi_name}-%{pypi_version}-py?.?.egg-info/
+%{python3_sitelib}/%{pypi_name}-%{version}-py?.?.egg-info/
 
 
 %changelog
+* Sun Feb 24 2019 Fabio Valentini <decathorpe@gmail.com> - 3.0.0-1
+- Update to version 3.0.0.
+
 * Sat Feb 02 2019 Fedora Release Engineering <releng@fedoraproject.org> - 3.0.0~b3-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_30_Mass_Rebuild
 
