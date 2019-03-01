@@ -13,7 +13,7 @@ jsonschema is an implementation of JSON Schema for Python (supporting
 
 Name:           python-%{pypi_name}
 Summary:        Implementation of JSON Schema validation for Python
-Version:        3.0.0
+Version:        3.0.1
 Release:        1%{?dist}
 License:        MIT
 
@@ -75,6 +75,9 @@ PYTHONPATH=$(pwd) trial-3 %{pypi_name}
 
 
 %changelog
+* Fri Mar 01 2019 Fabio Valentini <decathorpe@gmail.com> - 3.0.1-1
+- Update to version 3.0.1.
+
 * Sun Feb 24 2019 Fabio Valentini <decathorpe@gmail.com> - 3.0.0-1
 - Update to version 3.0.0.
 
