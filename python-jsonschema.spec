@@ -28,11 +28,14 @@ BuildRequires:  python3dist(setuptools)
 BuildRequires:  python3dist(setuptools-scm)
 
 # test requirements
+%bcond_without tests
+%if %{with tests}
 BuildRequires:  python3dist(attrs)
 BuildRequires:  python3dist(perf)
 BuildRequires:  python3dist(pyrsistent)
 BuildRequires:  python3dist(six)
 BuildRequires:  python3dist(twisted)
+%endif
 
 %description %{common_description}
 
@@ -60,8 +63,10 @@ rm -rf %{pypi_name}.egg-info
 %py3_install
 
 
+%if %{with tests}
 %check
 PYTHONPATH=$(pwd) trial-3 %{pypi_name}
+%endif
 
 
 %files -n python3-%{pypi_name}
