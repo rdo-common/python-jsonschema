@@ -28,7 +28,7 @@ BuildRequires:  python3dist(setuptools)
 BuildRequires:  python3dist(setuptools-scm)
 
 # test requirements
-%bcond_without tests
+%bcond_with tests
 %if %{with tests}
 BuildRequires:  python3dist(attrs)
 BuildRequires:  python3dist(perf)
